@@ -1,0 +1,27 @@
+<div class="container mt-5">
+<h3>Hello {{name}}</h3>
+<mat-form-field appearance="outline">
+    <mat-label>Outline form field</mat-label>
+    <input matInput placeholder="Placeholder" [(ngModel)]="name">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>Let us know who are you!</mat-hint>
+  </mat-form-field>
+  <div class="mt-5">
+    <label id="example-radio-group-label">Pick your favorite Name Style</label>
+    <mat-radio-group
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group">
+      <mat-radio-button class="example-radio-button">FirstName, LastName (e.g., Smith, John)</mat-radio-button>
+      <mat-radio-button class="example-radio-button">LastName, FirstName (e.g., John, Smith)</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="w-25 mt-5"> 
+    <h3>Token Expires Every 1000 second </h3>
+    <h4></h4>
+    <mat-form-field>
+    <input matInput placeholder="Press Button Below "  type="text" readonly>
+    <mat-icon matSuffix>favorite</mat-icon>
+    </mat-form-field>
+  <button mat-flat-button color="primary" (click)="generateTokenAndNavigate()">Generate Token to access page</button>
+</div>
+</div>

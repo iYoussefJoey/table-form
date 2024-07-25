@@ -1,0 +1,46 @@
+<div class="container mt-2">
+  <div class="d-flex">
+    <button class="m-2 w-25" mat-flat-button routerLink="/forms">Add Student <mat-icon>add</mat-icon></button>
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+    </mat-form-field>
+    <mat-form-field class="ms-auto ">
+      <mat-label>Drag The Column</mat-label>
+      <mat-select disableRipple >
+        <div cdkDropList (cdkDropListDropped)="updateDisplayedColumns($event)">
+          <div *ngFor="let column of displayedColumns" cdkDrag>
+            <!-- cdkDropList used to make the drop list draggable and cdkDrag is used in each option so it can be dragged and re order -->
+            <mat-option class="example-drag-cursor" >{{ column }} <mat-icon >remove_red_eye</mat-icon></mat-option>
+          </div>
+        </div>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" matSort cdkDropListGroup>
+
+      <!-- Dynamic Columns -->
+       
+      <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{ column }} </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index" > 
+          <ng-container *ngIf="column != 'actions'">
+            {{ element[column] }} 
+          </ng-container>
+          <ng-container *ngIf="column == 'actions'" >
+            <button mat-icon-button color="primary" (click)="editRow(i)"><mat-icon >edit</mat-icon></button>
+            <button mat-icon-button  color="warn" (click)="deleteRow(i)"><mat-icon >delete</mat-icon></button>
+          </ng-container>
+        </mat-cell>  
+      </ng-container>
+      
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page"></mat-paginator>
+  </div>
+  <button class="mt-3 d-flex ms-auto" (click)="delToken()" mat-flat-button  color="warn"><mat-icon>delete_outline</mat-icon>Log Out</button>
+</div>

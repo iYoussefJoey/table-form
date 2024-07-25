@@ -1,0 +1,8 @@
+<div class="container ">
+<h4 mat-dialog-title class="text-center" >Confirm Deletion</h4>
+<div mat-dialog-content class="text-center">Are you sure you want to delete <strong>{{data.firstname}} {{data.lastname}}</strong></div>
+<div mat-dialog-action class="m-2 d-flex justify-content-around">
+    <button mat-flat-button color="primary" (click)="onCancel()" cdkFocusInitial>Don't Delete <mat-icon>settings_backup_restore</mat-icon></button>
+    <button mat-flat-button color="warn"  (click)="onConfirm()">Delete <mat-icon>delete</mat-icon></button>
+  </div>
+</div>

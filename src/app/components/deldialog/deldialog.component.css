@@ -1,0 +1,6 @@
+::ng-deep.mdc-dialog--open .mat-mdc-dialog-surface, .mdc-dialog--closing .mat-mdc-dialog-surface{
+    width: 500px;
+    height: 200px;
+    align-items: center;
+    justify-content: center;
+}

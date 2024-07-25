@@ -1,0 +1,36 @@
+<div class="container d-flex justify-content-center  ">
+
+<form [formGroup]="registerForm" (ngSubmit)="submitForm(registerForm)">
+    <mat-card>
+<app-microforms [label]="'First Name'" controlName="firstname" [placeholder]="'Enter Your First Name'" [type]="'text'"></app-microforms>
+<app-microforms [label]="'Last Name'" controlName="lastname" [placeholder]="'Enter Your last Name'" [type]="'text'"></app-microforms>
+<mat-radio-group aria-label="Select an option" formControlName="gender">
+    <mat-radio-button value="Male">Male</mat-radio-button>
+    <mat-radio-button value="Female">Female</mat-radio-button>
+  </mat-radio-group>  
+<app-microforms [label]="'Email'" controlName="email" [placeholder]="'Enter Your E-Mail'" [type]="'email'"></app-microforms>
+<app-microforms [label]="'Phone'" controlName="phone"  [placeholder]="'Enter Your Phone Number'" [type]="'tel'"></app-microforms>
+<app-dateforms [label]="'Date of Birth'"  controlName="dOB" [placeholder]="'Enter Your Date of Birth'"></app-dateforms>
+<app-dateforms [label]="'Graduation Date'"  controlName="gradutionYear" [placeholder]="'Enter Gradtuion Date'"></app-dateforms>
+<mat-radio-group aria-label="Select an option" formControlName="familymember">
+    <mat-radio-button value="Father">Father</mat-radio-button>
+    <mat-radio-button value="Mother">Mother</mat-radio-button>
+    <mat-radio-button value="Other" color="warn">Other</mat-radio-button>
+  </mat-radio-group>  
+  <button type="button" mat-stroked-button *ngIf="registerForm.get('familymember')?.value === 'Other'" (click)="addStudentParent()">Add Family Memmber <mat-icon>add</mat-icon></button>
+  <ng-container formArrayName="studentParent">
+        <div *ngFor="let parent of studentParent.controls; let i = index" [formGroupName]="i">
+          <div>
+            <h2>Family Member {{i + 1}}</h2>
+            <app-microforms [label]="'Family Member Name'" controlName="familyMemberName" [placeholder]="'Enter Your Name'" [type]="'text'"></app-microforms>
+            <app-microforms [label]="'Phone'" controlName="phone" [placeholder]="'Enter Phone Number'" [type]="'tel'"></app-microforms>
+            <app-microforms [label]="'Relation to Student'" controlName="relationToStudent" [placeholder]="'Enter Relation'" [type]="'text'"></app-microforms>
+            <button class="w-100" color="warn" type="button" mat-stroked-button (click)="deleteFamilyMember(i)">Remove Family Member</button>
+          </div>
+        </div>
+      </ng-container>
+      <button type="submit" [disabled]="registerForm.invalid"  mat-flat-button>Submit <mat-icon >note_add</mat-icon></button>
+</mat-card>
+</form>
+<button class="ms-5 mt-5" type="button" (click)="clearData()" mat-flat-button color="warn">Clear <mat-icon >clear</mat-icon></button>
+</div>
