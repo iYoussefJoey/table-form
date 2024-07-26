@@ -37,7 +37,7 @@ import { TokenService } from '../../token.service';
 })
 export class TableComponent implements AfterViewInit , OnInit {
 
-
+  // @ViewChild is a decorator that used to access and interact with a child component 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table! : MatTable<any>; //@Viewchild used to get refereces to all 3 above references
@@ -59,7 +59,7 @@ export class TableComponent implements AfterViewInit , OnInit {
       this.displayedColumns = ['firstname', 'lastname', 'dOB', 'gender', 'gradutionYear', 'phone', 'email', 'familymember','lastModificationDate','studentParent','actions'];
     }else if (this.radioOption=='lastname'){ 
       this.displayedColumns = ['lastname', 'firstname', 'dOB', 'gender', 'gradutionYear', 'phone', 'email', 'familymember','lastModificationDate','studentParent','actions'];
-  }
+  } // checks the value of the radio button and changes the displayed columns
 }
   loadData(){
     let oldData: any = JSON.parse(localStorage.getItem('registerForm') || '[]');

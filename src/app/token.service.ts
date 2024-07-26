@@ -24,11 +24,11 @@ export class TokenService {
   }
   setNameStyle(style: string) {
     this.radioOption = style;
-  }
+  } // set the name style
 
   getNameStyle() {
     return this.radioOption;
-  }
+  } // get the name style
   
 }
 

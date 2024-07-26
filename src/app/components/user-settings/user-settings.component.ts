@@ -26,7 +26,7 @@ radioOption:string ='firstname'
 
 constructor(private tokenserv:TokenService, private router:Router){}
 onRadioClk(){
-  this.tokenserv.setNameStyle(this.radioOption)
+  this.tokenserv.setNameStyle(this.radioOption)// calls the service and passes the current value of radioOption this stores the selected name style
 }
 
 generateTokenAndNavigate() {
@@ -39,9 +39,6 @@ generateTokenAndNavigate() {
   // Start the interval to log the countdown every second
   this.intervalId = setInterval(() => {
     if (countdown > 0) {
-      if(localStorage.getItem('sessionToken') === null){
-        console.log('Session token not found' , countdown--);
-      }
       console.log(`Time remaining before token removal: ${countdown} seconds`);
       countdown--;
     } else {
