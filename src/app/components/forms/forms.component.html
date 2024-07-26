@@ -17,17 +17,17 @@
     <mat-radio-button value="Mother">Mother</mat-radio-button>
     <mat-radio-button value="Other" color="warn">Other</mat-radio-button>
   </mat-radio-group>  
-  <button type="button" mat-stroked-button *ngIf="registerForm.get('familymember')?.value === 'Other'" (click)="addStudentParent()">Add Family Memmber <mat-icon>add</mat-icon></button>
   <ng-container formArrayName="studentParent">
-        <div *ngFor="let parent of studentParent.controls; let i = index" [formGroupName]="i">
-          <div>
-            <h2>Family Member {{i + 1}}</h2>
-            <app-microforms [label]="'Family Member Name'" controlName="familyMemberName" [placeholder]="'Enter Your Name'" [type]="'text'"></app-microforms>
-            <app-microforms [label]="'Phone'" controlName="phone" [placeholder]="'Enter Phone Number'" [type]="'tel'"></app-microforms>
-            <app-microforms [label]="'Relation to Student'" controlName="relationToStudent" [placeholder]="'Enter Relation'" [type]="'text'"></app-microforms>
-            <button class="w-100" color="warn" type="button" mat-stroked-button (click)="deleteFamilyMember(i)">Remove Family Member</button>
-          </div>
-        </div>
+    <div *ngFor="let parent of studentParent.controls; let i = index" [formGroupName]="i">
+      <div>
+        <h2>Family Member {{i + 1}}</h2>
+        <app-microforms [label]="'Family Member Name'" controlName="familyMemberName" [placeholder]="'Enter Your Name'" [type]="'text'"></app-microforms>
+        <app-microforms [label]="'Phone'" controlName="phone" [placeholder]="'Enter Phone Number'" [type]="'tel'"></app-microforms>
+        <app-microforms [label]="'Relation to Student'" controlName="relationToStudent" [placeholder]="'Enter Relation'" [type]="'text'"></app-microforms>
+      </div>
+      <button class="w-50 d-flex ms-auto mt-2" color="warn" type="button" mat-flat-button (click)="deleteFamilyMember(i)">Remove Family Member</button>
+    </div>
+    <button type="button" mat-flat-button class="w-50 mb-2" *ngIf="registerForm.get('familymember')?.value === 'Other'" (click)="addStudentParent()">Add Family Memmber <mat-icon>add</mat-icon></button>
       </ng-container>
       <button type="submit" [disabled]="registerForm.invalid"  mat-flat-button>Submit <mat-icon >note_add</mat-icon></button>
 </mat-card>

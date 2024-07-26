@@ -10,9 +10,10 @@
     <label id="example-radio-group-label">Pick your favorite Name Style</label>
     <mat-radio-group
       aria-labelledby="example-radio-group-label"
-      class="example-radio-group">
-      <mat-radio-button class="example-radio-button">FirstName, LastName (e.g., Smith, John)</mat-radio-button>
-      <mat-radio-button class="example-radio-button">LastName, FirstName (e.g., John, Smith)</mat-radio-button>
+      class="example-radio-group" [(ngModel)]="radioOption" (change)="onRadioClk()"> 
+      <!-- missing to match this data with enum so i can  change the table according to this data set -->
+      <mat-radio-button class="example-radio-button" value="firstname">FirstName, LastName (e.g., Smith, John)</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="lastname">LastName, FirstName (e.g., John, Smith)</mat-radio-button>
     </mat-radio-group>
   </div>
   <div class="w-25 mt-5"> 

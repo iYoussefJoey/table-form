@@ -13,6 +13,7 @@ import { Router, RouterModule } from '@angular/router';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatDialog} from '@angular/material/dialog';
 import { DeldialogComponent } from '../deldialog/deldialog.component';
+import { TokenService } from '../../token.service';
 @Component({
   selector: 'app-table',
   standalone: true,
@@ -43,20 +44,31 @@ export class TableComponent implements AfterViewInit , OnInit {
   displayedColumns: string[] = ['firstname', 'lastname', 'dOB', 'gender', 'gradutionYear', 'phone', 'email', 'familymember','lastModificationDate','studentParent','actions'];
   dataSource = new MatTableDataSource<any>([]);// datasource used to show the data in the table
   readonly dialog = inject(MatDialog);
+  radioOption:string ='firstname'
 
- constructor(private router:Router, public _dialog:MatDialog) { }
+ constructor(private router:Router , private tokenserv:TokenService) { }
   ngOnInit(): void {
     this.loadData()
-
+    this.radioOption = this.tokenserv.getNameStyle()
+    this.changedCol()
   }
+  //lifecycle hook .. angular made it so we can use logic on here but it gets intialized after constructor
+
+  changedCol(){
+    if (this.radioOption=='firstname'){
+      this.displayedColumns = ['firstname', 'lastname', 'dOB', 'gender', 'gradutionYear', 'phone', 'email', 'familymember','lastModificationDate','studentParent','actions'];
+    }else if (this.radioOption=='lastname'){ 
+      this.displayedColumns = ['lastname', 'firstname', 'dOB', 'gender', 'gradutionYear', 'phone', 'email', 'familymember','lastModificationDate','studentParent','actions'];
+  }
+}
   loadData(){
     let oldData: any = JSON.parse(localStorage.getItem('registerForm') || '[]');
-    
-    if (Array.isArray(oldData)) {
-      this.dataSource.data = oldData
-    }
+    //getting the data in OldData from local storage and parse it to json if register doesnt exit make it empty array
+    if (Array.isArray(oldData)) { // chech if the data is an array
+      this.dataSource.data = oldData // Create a new reference
+    }// if old data is an array then put it to the data source
     else{
-      this.dataSource.data =[]
+      this.dataSource.data =[] // if the OlData is no not an array ten set the data to an empty array
     }
     console.log(this.dataSource.data);
   }
@@ -85,21 +97,21 @@ export class TableComponent implements AfterViewInit , OnInit {
     //used moveItemInArray to update the displayedcolums array and force it to render with new col order
   }
   deleteRow(index: number) {
-    const student = this.dataSource.data[index];
-    const dialogRef = this._dialog.open(DeldialogComponent,{
+    const student = this.dataSource.data[index]; // get the student to be deleted
+    const dialogRef = this.dialog.open(DeldialogComponent,{ // open the delete dialog
       data: {
-        firstname: student.firstname,
+        firstname: student.firstname, // send the data to the dialog
         lastname: student.lastname
       }
     })
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result==true) {
+    dialogRef.afterClosed().subscribe(result => { // get the result of the dialog
+      if (result==true) { // if it is true then delete it
         const storedData = JSON.parse(localStorage.getItem('registerForm') || '[]');
         if (Array.isArray(storedData)) {
-          storedData.splice(index, 1);
-          localStorage.setItem('registerForm', JSON.stringify(storedData));
-          this.loadData();
+          storedData.splice(index, 1);// delete the row from the local storage
+          localStorage.setItem('registerForm', JSON.stringify(storedData));// set updated data in the local storage
+          this.loadData(); // reload the table
         }
       }
     })
@@ -109,8 +121,18 @@ export class TableComponent implements AfterViewInit , OnInit {
     this.router.navigate(['/forms',index]) //routs to forms page with the id so it can target which student to edit
     }
     delToken(){
-      localStorage.removeItem('sessionToken');
-      this.router.navigate(['/settings']);
-      location.reload(); // when it navigate relod so it can stop the countdown in the console
+      const dialogRef = this.dialog.open(DeldialogComponent,{
+        data: {
+          firstname: 'Session',
+          lastname: 'TOKEN'
+        }
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result==true) {
+          localStorage.removeItem('sessionToken');
+          this.router.navigate(['/settings']);
+          location.reload(); // when it navigate relod so it can stop the countdown in the console
+        }
+      })
     }
 }

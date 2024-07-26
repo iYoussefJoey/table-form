@@ -22,8 +22,13 @@ export class UserSettingsComponent {
 name:string = 'User'
 tokenTime!: Date;  
 intervalId: any;
+radioOption:string ='firstname'
 
 constructor(private tokenserv:TokenService, private router:Router){}
+onRadioClk(){
+  this.tokenserv.setNameStyle(this.radioOption)
+}
+
 generateTokenAndNavigate() {
   this.tokenserv.generateToken();
   console.log(this.tokenserv.getToken(),this.name)

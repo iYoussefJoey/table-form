@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class TokenService {
   private tokenKey = 'sessionToken';
+  private radioOption: string = 'firstname';
+
   constructor() {  
 
   }
@@ -19,6 +21,13 @@ export class TokenService {
 
   getToken() {
     return localStorage.getItem(this.tokenKey);
+  }
+  setNameStyle(style: string) {
+    this.radioOption = style;
+  }
+
+  getNameStyle() {
+    return this.radioOption;
   }
   
 }
