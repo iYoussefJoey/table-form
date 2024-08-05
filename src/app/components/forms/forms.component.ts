@@ -50,9 +50,8 @@ export class FormsComponent implements OnInit {
       gradutionYear: ['', [Validators.required,this.DOBvalid,this.lastDecade]],
       phone: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      familymember:['',[Validators.required]],
       lastModificationDate: [''],
-      studentParent: this.fb.array([])
+      studentParent: this.fb.array([],Validators.required)
     });
   }
 
@@ -70,12 +69,12 @@ export class FormsComponent implements OnInit {
     const minAllowedDate = new Date();
     minAllowedDate.setFullYear(today.getFullYear() - 120);
     if (dob > today || dob < minAllowedDate)      {
-        return {'Date cant be in the future and cant be 120 years ago youre not immortal ':true};      
+        return {'Date cant be in the future and cant be 120 years ago youre not immortal ':true};
          // this method prevents any future date from being entered and prevent any date less than 120 years ago from being entered
 
       }
       return null;
-        
+
   }
 
   lastDecade(control:FormControl):{[key:string] :  boolean} | null {
@@ -84,11 +83,11 @@ export class FormsComponent implements OnInit {
     // Calculate the minimum allowed date (10 years ago)
     const minAllowedDate = new Date();
     minAllowedDate.setFullYear(today.getFullYear() - 10);
-  
+
     if (dateOfGrad > today || dateOfGrad < minAllowedDate) {
       return { 'Graudtion year cant be more than 10 years': true };
     } // grad date cant be in the future and cant be 10 years from now
-  
+
     return null;
   }
   get studentParent() {
@@ -99,7 +98,8 @@ export class FormsComponent implements OnInit {
     const parentGroup = this.fb.group({
       familyMemberName: ['', [Validators.required, Validators.minLength(2)]],
       phone: ['', [Validators.required]],
-      relationToStudent: ['', [Validators.required]]
+      familymember:['',[Validators.required]],
+      relationToStudent: ['']
     });
     this.studentParent.push(parentGroup);
   }
@@ -108,15 +108,16 @@ export class FormsComponent implements OnInit {
     this.studentParent.removeAt(index);
   }
   loadFormData(): void {
-    const storedData = JSON.parse(localStorage.getItem('registerForm') || '[]');
+    const storedData = JSON.parse(localStorage.getItem('students') || '[]');
     if (this.editIndex !== null && storedData[this.editIndex]) {
       const data = storedData[this.editIndex];
       this.registerForm.patchValue(data); // a small error i cant show the values in the form array! saved for later to solve
       data.studentParent.forEach((parent: any) => {
         this.studentParent.push(this.fb.group({
           familyMemberName: [parent.familyMemberName, Validators.required],
+          familymember: [parent.familymember, Validators.required],
           phone: [parent.phone, Validators.required],
-          relationToStudent: [parent.relationToStudent, Validators.required],
+          relationToStudent: [parent.relationToStudent],
         }));
       });
     }
@@ -129,31 +130,31 @@ export class FormsComponent implements OnInit {
       const updatedStudent = registerForm.value;
       let localtime = updatedStudent.lastModificationDate;
       localtime = new Date().toLocaleString(); // tolocalestring format the date and time acoording to the users's local settings
-      updatedStudent.lastModificationDate = localtime 
+      updatedStudent.lastModificationDate = localtime
 
       let formData = this.registerForm.value; // Extract values
       formData.studentParent = this.studentParent.value.map((parent:any)=>
-        `{${parent.familyMemberName}} {${parent.relationToStudent}} {${parent.phone}}`);
+        `${parent.familyMemberName} {${parent.relationToStudent}} {${parent.familymember}} {${parent.phone}}`);
        // this to spread the array from object to string so it doesnt show as object object
 
-      let storedData = JSON.parse(localStorage.getItem('registerForm') || '[]');
+      let storedData = JSON.parse(localStorage.getItem('students') || '[]');
       //storing the data here and if its not an array then make it an array so i can show it
       if (!Array.isArray(storedData)) {
         storedData = [];
       }
-      // this targets the index of the edit so it can target and edit only single object 
+      // this targets the index of the edit so it can target and edit only single object
       if (this.editIndex !== null) {
         storedData[this.editIndex] = formData; // update storedData element with the new form data
       } else {
         storedData.push(formData); //when its null mean the user creating new form not eidting an existing one then push it to the end of the array
       }
 
-      localStorage.setItem('registerForm', JSON.stringify(storedData)); //store ypdated data and converts array back to string
+      localStorage.setItem('students', JSON.stringify(storedData)); //store ypdated data and converts array back to string
       this.router.navigate(['/table']);
 
     }
   }
-  
+
   clearData(){
     this.registerForm.reset(); // reset all the forms data to NULL
   }

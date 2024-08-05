@@ -37,6 +37,7 @@ export class MicroformsComponent {
   ngOnInit() {
     this.registerForm = <FormGroup>this.controlContainer.control;
     this.control = <FormControl>this.registerForm.get(this.controlName);
+    //casting the control to FormControl
   }
 
   getErrors(): string[] {

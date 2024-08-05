@@ -21,10 +21,14 @@ export class DeldialogComponent {
 
   onConfirm(): void {
     this.dialogRef.close(true);
+    // camel case: addUserComponent
+    // pascal case: AddUserComponent
+    // snake case: add-user-component
   }
 
   onCancel(): void {
     this.dialogRef.close(false);
   }
+
 
 }

@@ -1,3 +1,8 @@
-/* .width{
-    width: 10%;
-} */
+app-microforms{
+    display: flex;
+    justify-content: center;
+} 
+app-dateforms{
+    display: flex;
+    justify-content: center;
+}

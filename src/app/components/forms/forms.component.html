@@ -1,7 +1,7 @@
-<div class="container d-flex justify-content-center  ">
-
+<div class="container d-flex justify-content-center mt-2 ">
 <form [formGroup]="registerForm" (ngSubmit)="submitForm(registerForm)">
     <mat-card>
+      <mat-card-content>
 <app-microforms [label]="'First Name'" controlName="firstname" [placeholder]="'Enter Your First Name'" [type]="'text'"></app-microforms>
 <app-microforms [label]="'Last Name'" controlName="lastname" [placeholder]="'Enter Your last Name'" [type]="'text'"></app-microforms>
 <mat-radio-group aria-label="Select an option" formControlName="gender">
@@ -12,24 +12,28 @@
 <app-microforms [label]="'Phone'" controlName="phone"  [placeholder]="'Enter Your Phone Number'" [type]="'tel'"></app-microforms>
 <app-dateforms [label]="'Date of Birth'"  controlName="dOB" [placeholder]="'Enter Your Date of Birth'"></app-dateforms>
 <app-dateforms [label]="'Graduation Date'"  controlName="gradutionYear" [placeholder]="'Enter Gradtuion Date'"></app-dateforms>
-<mat-radio-group aria-label="Select an option" formControlName="familymember">
-    <mat-radio-button value="Father">Father</mat-radio-button>
-    <mat-radio-button value="Mother">Mother</mat-radio-button>
-    <mat-radio-button value="Other" color="warn">Other</mat-radio-button>
-  </mat-radio-group>  
-  <ng-container formArrayName="studentParent">
-    <div *ngFor="let parent of studentParent.controls; let i = index" [formGroupName]="i">
-      <div>
-        <h2>Family Member {{i + 1}}</h2>
-        <app-microforms [label]="'Family Member Name'" controlName="familyMemberName" [placeholder]="'Enter Your Name'" [type]="'text'"></app-microforms>
-        <app-microforms [label]="'Phone'" controlName="phone" [placeholder]="'Enter Phone Number'" [type]="'tel'"></app-microforms>
-        <app-microforms [label]="'Relation to Student'" controlName="relationToStudent" [placeholder]="'Enter Relation'" [type]="'text'"></app-microforms>
+<ng-container formArrayName="studentParent">
+  <div *ngFor="let parent of studentParent.controls; let i = index" [formGroupName]="i">
+    <div>
+      <h2>Family Member {{i + 1}}</h2>
+      <app-microforms [label]="'Family Member Name'" controlName="familyMemberName" [placeholder]="'Enter Your Name'" [type]="'text'"></app-microforms>
+      <app-microforms [label]="'Phone'" controlName="phone" [placeholder]="'Enter Phone Number'" [type]="'tel'"></app-microforms>
+      <mat-radio-group aria-label="Select an option" formControlName="familymember">
+          <mat-radio-button value="Father">Father</mat-radio-button>
+          <mat-radio-button value="Mother">Mother</mat-radio-button>
+          <mat-radio-button value="Other" color="warn">Other</mat-radio-button>
+        </mat-radio-group>  
+        <app-microforms [label]="'Relation to Student'" *ngIf="parent.get('familymember')?.value === 'Other' " controlName="relationToStudent" [placeholder]="'Enter Relation'" [type]="'text'"></app-microforms>
       </div>
-      <button class="w-50 d-flex ms-auto mt-2" color="warn" type="button" mat-flat-button (click)="deleteFamilyMember(i)">Remove Family Member</button>
+      <div class="d-flex mb-2">
+        <button type="button" mat-flat-button class="w-50"  (click)="addStudentParent()">Add Family Member <mat-icon>add</mat-icon></button>
+      <button class="w-50 d-flex ms-auto" color="warn" type="button" mat-flat-button (click)="deleteFamilyMember(i)">Remove Family Member <mat-icon>delete</mat-icon></button>
     </div>
-    <button type="button" mat-flat-button class="w-50 mb-2" *ngIf="registerForm.get('familymember')?.value === 'Other'" (click)="addStudentParent()">Add Family Memmber <mat-icon>add</mat-icon></button>
+    </div>
+    <button *ngIf="studentParent.length == 0 " type="button" mat-flat-button class="w-50 mb-2"  (click)="addStudentParent()">Add Family Member <mat-icon>add</mat-icon></button>
       </ng-container>
-      <button type="submit" [disabled]="registerForm.invalid"  mat-flat-button>Submit <mat-icon >note_add</mat-icon></button>
+    </mat-card-content>
+    <button type="submit" class="mb-2" [disabled]="registerForm.invalid"  mat-flat-button>Submit <mat-icon >note_add</mat-icon></button>
 </mat-card>
 </form>
 <button class="ms-5 mt-5" type="button" (click)="clearData()" mat-flat-button color="warn">Clear <mat-icon >clear</mat-icon></button>

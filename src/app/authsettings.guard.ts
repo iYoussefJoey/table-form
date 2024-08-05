@@ -1,17 +1,14 @@
-import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import {inject} from '@angular/core';
+import {CanActivateFn, Router} from '@angular/router';
 
 export const authsettingsGuard: CanActivateFn = (route, state) => {
- let router = inject(Router) as Router
- if(localStorage.getItem('sessionToken')!==null){
-    {  
-
+  let router = inject(Router) as Router
+  if (localStorage.getItem('sessionToken') !== null) {
+    {
       router.navigate(['/table']);
-
-   return false;
- } 
-}else{
-
-  return true;
-}
+      return false;
+    }
+  } else {
+    return true;
+  }
 }
