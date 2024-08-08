@@ -1,0 +1,54 @@
+<div class="container mt-3">
+  <div *ngIf="isLoading" class="centered">
+    <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading">
+    <h3 class="text-center">{{disclaimer}}</h3>
+<mat-table [dataSource]="coins" class="mat-elevation-z8">
+    <!-- Time Updated Column -->
+    <ng-container matColumnDef="timeUpdated">
+      <mat-header-cell *matHeaderCellDef>Time Update</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.timeUpdated }}</mat-cell>
+    </ng-container>
+  
+    <!-- Time Updated ISO Column -->
+    <ng-container matColumnDef="timeUpdatedISO">
+      <mat-header-cell *matHeaderCellDef>Time  ISO</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.timeUpdatedISO }}</mat-cell>
+    </ng-container>
+  
+    <!-- Time Updated UK Column -->
+    <ng-container matColumnDef="timeUpdatedUK">
+      <mat-header-cell *matHeaderCellDef>Time  UK</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.timeUpdatedUK }}</mat-cell>
+    </ng-container>
+  
+    <!-- Chart Name Column -->
+    <ng-container matColumnDef="chartName">
+      <mat-header-cell *matHeaderCellDef>Chart Name</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.chartName }}</mat-cell>
+    </ng-container>
+  
+    <!-- Currency Column -->
+    <ng-container matColumnDef="currency">
+      <mat-header-cell *matHeaderCellDef>Currency</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.currency }}</mat-cell>
+    </ng-container>
+  
+    <!-- Rate Column -->
+    <ng-container matColumnDef="rate">
+      <mat-header-cell *matHeaderCellDef>Rate</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.rate }}</mat-cell>
+    </ng-container>
+  
+    <!-- Description Column -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{ element.description }}</mat-cell>
+    </ng-container>
+  
+    <mat-header-row contenteditable="true" *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+</div>

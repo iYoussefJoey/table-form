@@ -1,0 +1,12 @@
+th{
+    background-color: #005cbb !important;
+    color: white;
+}
+
+.centered{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    overflow: h;
+}

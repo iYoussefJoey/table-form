@@ -16,13 +16,19 @@
       <mat-radio-button class="example-radio-button" value="lastname" >LastName, FirstName (e.g., John, Smith)</mat-radio-button>
     </mat-radio-group>
   </div>
-  <div class="w-25 mt-5"> 
-    <h3>Token Expires Every 1000 second </h3>
-    <h4></h4>
-    <mat-form-field>
+  <div class="w-100 mt-5"> 
+    <div class="m-2">
+    <h3>Token Expires Every 15 minutes</h3>
+    <h4 >Current Date: <span class="text-success ps-2"> {{ todayDate   }} </span> </h4>
+    <hr>
+    <h4>Token Expiry Date: <span class="text-danger ps-2"> {{ tokenExpiryDate}}</span></h4> 
+  </div>
+  <div class="d-block ">
+    <mat-form-field class="d-block">
     <input matInput placeholder="Press Button Below "  type="text" readonly>
     <mat-icon matSuffix>favorite</mat-icon>
     </mat-form-field>
-  <button mat-flat-button color="primary" (click)="generateTokenAndNavigate()">Generate Token to access page</button>
+  <button class="d-block ms-auto" mat-flat-button color="primary" (click)="generateTokenAndNavigate()">Generate Token to access page</button>
+</div>
 </div>
 </div>
