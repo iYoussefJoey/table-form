@@ -50,5 +50,5 @@ export class CoinPricesComponent implements OnInit {
       }
     }
     return coinsArray;
-  }
+  } // understand this is important ****************
 }

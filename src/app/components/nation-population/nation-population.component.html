@@ -10,7 +10,7 @@
       <!-- Dynamic Columns -->
       <ng-container *ngFor="let col of displayedColumns" [matColumnDef]="col">
         <th class="fw-bolder" mat-header-cell *matHeaderCellDef>{{ col }}</th>
-        <td mat-cell *matCellDef="let row">{{ row[col] | removeSpaces}}</td>
+        <td mat-cell *matCellDef="let row">{{ row[col]}}</td>
         <!-- if removed remove space nothing would happen because solved it in TS -->
       </ng-container>
   

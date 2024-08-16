@@ -1,0 +1,149 @@
+.cont{
+    margin: 5px 40px ;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.font{
+    font-size: xx-large !important;
+}
+/* Position the radio button */
+.radio-wrapper {
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 20px;
+  color: #5146A9;
+  padding: 20px 10px 10px;
+  display: inline-block;
+  width: 320px;
+  transition: border 0.1s ease;
+}
+
+.selectes{
+  border: #5146A9 2px solid;
+  transform: scale(1.1);
+}
+  .custom-radio {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px;
+  }
+  .mat-accent.mat-mdc-radio-button{
+    --mdc-radio-selected-focus-icon-color: #5146A9;
+    --mdc-radio-selected-hover-icon-color: #5146A9;
+    --mdc-radio-selected-icon-color: #5146A9;
+    --mdc-radio-selected-pressed-icon-color: #5146A9;
+    --mat-radio-checked-ripple-color: #5146A9;
+  }
+  
+  
+  .radio-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  
+  .mat-icon {
+    margin-right: 8px;
+  }
+.fnt{
+    font-weight: 900;
+}  
+.mdc-button{
+    border-radius: 0px;
+    border:#5146A9 1px solid !important;
+    
+}
+.mdc-button.nd{
+background-color: #5146A9 !important; 
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background-color: #ccc;
+    border: 1px solid #ccc;
+  }
+  
+  .grid-item {
+    background-color: white;
+    padding: 17px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .selected {
+    background-color: #3f51b5;
+    color: white;
+    
+  }
+  .checkmark, .cross {
+    margin-right: 2px;
+  }
+  
+  .price {
+    margin: 7px;
+    font-weight: bold;
+  }
+ 
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 30%;
+    margin-left: 20px ;
+  }
+  .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper{
+    margin-left: 5px !important;
+  }
+  
+
+
+
+
+/* chat */
+  /* .seat-selection {
+    text-align: center;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0px;
+    margin: 20px 0;
+  }
+  
+  .grid div {
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .grid div.selected {
+    background-color: #3f51b5;
+    color: white;
+  }
+  
+  .grid div.unavailable {
+    background-color: #f2f2f2;
+    color: gray;
+    cursor: not-allowed;
+  }
+  
+  .summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  } */

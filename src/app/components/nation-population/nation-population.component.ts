@@ -16,7 +16,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 export class NationPopulationComponent implements OnInit {
 constructor(private callingapi:CallingApiService){}
 isLoading:boolean = false
-displayedColumns: string[] = ['IDNation', 'IDYear', 'Nation', 'Population','SlugNation','Year'];
+displayedColumns: string[] = ['ID Nation', 'ID Year', 'Nation', 'Population','Slug Nation','Year'];
 dataSource = new MatTableDataSource<any>([]); 
 
 ngOnInit(): void {
@@ -29,16 +29,18 @@ this.getPopultionInUSA()
 getPopultionInUSA(){
   this.isLoading = true;
   this.callingapi.getNationAndPopulation().subscribe((data)=>{
-    const dataView = data.data.map((item:any)=>({
-      //this map solves the problem of 'ID Nation' the spaces but i made a pipe was trying first without table to show the data
-      IDNation : item['ID Nation'],
-      IDYear : item['ID Year'],
-      Nation : item['Nation'],
-      Population : item['Population'],
-      SlugNation : item['Slug Nation'],
-      Year : item['Year']
-    }));
-this.dataSource.data = dataView
+    this.dataSource = data.data;
+    // const dataView = data.data.map((item:any)=>({
+    //   //this map solves the problem of 'ID Nation' the spaces but i made a pipe was trying first without table to show the data
+    //   IDNation : item['ID Nation'],
+    //   IDYear : item['ID Year'],
+    //   Nation : item['Nation'],
+    //   Population : item['Population'],
+    //   SlugNation : item['Slug Nation'],
+    //   Year : item['Year']
+    // }));
+// this.dataSource.data = dataView
+console.log(this.dataSource)
 this.isLoading = false;
 
 })}

@@ -5,6 +5,7 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { CoinPricesComponent } from './components/coin-prices/coin-prices.component';
 import { authGuard } from './auth.guard';
 import { NationPopulationComponent } from './components/nation-population/nation-population.component';
+import { CarsComponent } from './components/cars/cars.component';
 
 export const routes: Routes = [
 
@@ -14,6 +15,7 @@ export const routes: Routes = [
     {path: 'forms/:id', canActivate: [authGuard] , component: FormsComponent},
     {path: 'coin', canActivate: [authGuard] , component: CoinPricesComponent},
     {path: 'nation', canActivate: [authGuard] , component: NationPopulationComponent},
+    {path: 'cars', canActivate: [authGuard] , component: CarsComponent},
     {path: 'settings', component: UserSettingsComponent},
     
 ];

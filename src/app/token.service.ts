@@ -16,10 +16,10 @@ export class TokenService {
     const storedNameFormat  = localStorage.getItem(this.nameFormatKey);
     if(storedNameFormat ){
       this.nameFormat= JSON.parse(storedNameFormat) as NameFormatTypes ;
-      setTimeout(() => {
-        this.clearToken();
-        console.log('Session token removed');
-      }, 900000);
+      // setTimeout(() => {
+      //   this.clearToken();
+      //   console.log('Session token removed');
+      // }, 9000);
     }
   }
 

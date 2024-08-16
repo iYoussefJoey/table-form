@@ -54,10 +54,6 @@ import { BehaviorSubject } from 'rxjs';
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
-  providers: [
-    
-    UserSettingsComponent
-  ]
 })
 export class TableComponent implements AfterViewInit, OnInit {
   // @ViewChild is a decorator that used to access and interact with a child component
@@ -72,7 +68,7 @@ export class TableComponent implements AfterViewInit, OnInit {
   userName:string = 'User';
 
 
-  constructor(private router: Router, private tokenserv: TokenService,private userSetting:UserSettingsComponent) {}
+  constructor(private router: Router, private tokenserv: TokenService) {}
   ngOnInit(): void {
   this.loadSettings()
     this.nameStyle = this.tokenserv.getNameStyle();
