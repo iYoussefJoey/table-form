@@ -1,36 +1,50 @@
-<div class="container mt-5">
-<h3>Hello {{name}}</h3>
+<div class="container mt-5 margins-top">
+<h3>{{ 'HELLO' | translate }}   {{name }}</h3>
 <mat-form-field appearance="outline">
-    <mat-label>Outline form field</mat-label>
-    <input matInput placeholder="Placeholder" [(ngModel)]="name">
+    <mat-label>{{ 'PLACEHOLDER' | translate}}</mat-label>
+    <input matInput placeholder="{{ 'PLACEHOLDER' |translate }}" [(ngModel)]="name">
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    <mat-hint>Let us know who are you!</mat-hint>
+    <mat-hint>{{'letUsKnow' |translate}}</mat-hint>
   </mat-form-field>
   <div class="mt-5">
-    <label id="example-radio-group-label">Pick your favorite Name Style</label>
+    <label id="example-radio-group-label">{{'NAME_STYLE_LABEL'| translate }}</label>
     <mat-radio-group
       aria-labelledby="example-radio-group-label"
       class="example-radio-group" [(ngModel)]="radioOption" (change)="onRadioClk()"> 
       <!-- ngmodel is a 2 way data binding  and binds the selected radio button and onRadioClk when selected radio btn changes-->
-      <mat-radio-button class="example-radio-button" value="firstname" >FirstName, LastName (e.g., Smith, John)</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="lastname" >LastName, FirstName (e.g., John, Smith)</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="firstname" >{{"FIRSTNAME_LASTNAME"| translate}}</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="lastname" >{{'LASTNAME_FIRSTNAME' |translate}}</mat-radio-button>
     </mat-radio-group>
   </div>
-  <div class="w-100 mt-5"> 
+  <div class=" w-100 mt-5"> 
+    <div class="mt-2 childcomponent">
+    <app-global-button [bgcolor]="'darkblue'" [buttonwidth]="'220px'" [buttonId]="'button1'" [isLoading]="loadingStas['button1']" [icons]="'flag'" (buttonClick)="switchToPolish('button1')" [name]="'switchToPolish'"></app-global-button>
+  </div>
+  <div class="mt-2 childcomponent">
+  <app-global-button  [buttonwidth]="'220px'" [bgcolor]="'darkblue'"  [isLoading]="loadingStas['button2']" [icons]="'flag'" (buttonClick)="switchToEnglish('button2')" [name]="'switchToEnglish'"></app-global-button>
+</div>
     <div class="m-2">
       <h3 class="text-center text-capitalize" [ngStyle]="{'color':tokenColor}">{{showToken()}}</h3>
-    <h3>Token Expires Every 15 minutes</h3>
+    <h3>{{'TOKEN_EXPIRES'|translate}}</h3>
     <hr>
-    <h4 >Current Date: <span class="text-success ps-2"> {{ todayDate   }} </span> </h4>
+    <h4 >{{'CURRENT_DATE'|translate}} <span class="text-success ps-2"> {{ todayDate | date:"dd.MM.yyyy 'at' hh:mm a"  }} </span> </h4>
     <hr>
-    <h4>Token Expiry Date: <span class="text-danger ps-2"> {{ tokenExpiryDate}}</span></h4> 
+    <h4 >{{ 'TOKEN_EXPIRY_DATE' |translate }}<span class="text-danger ps-2" > {{ tokenExpiryDate | dateFormat}}</span></h4> 
+    <!-- // create a pipe using "custom Date Pipe" <= the name customDatePipe
+ 
+     'dd.MM.YYYY HH:mm.ss'
+     make a custom pipe too translate to polish!!
+     -->
   </div>
   <div class="d-block ">
     <mat-form-field class="d-block">
-    <input matInput placeholder="Press Button Below "  type="text" readonly>
+    <input  matInput placeholder="{{ 'PRESS_BUTTON_BELOW' | translate }}"  type="text" readonly>
     <mat-icon matSuffix>favorite</mat-icon>
     </mat-form-field>
-  <button class="d-block ms-auto" mat-flat-button color="primary" (click)="generateTokenAndNavigate()">Generate Token to access page</button>
+    <div class="childcomponent " >
+      <app-global-button [bgcolor]="'darkblue'" [isLoading]="loadingStas['button3']"  [buttonwidth]="'400px'" [icons]="'favorite'" (buttonClick)="generateTokenAndNavigate('button3')" [name]="'GENERATE_TOKEN'"></app-global-button>
+      
+    </div>
 </div>
 </div>
 </div>

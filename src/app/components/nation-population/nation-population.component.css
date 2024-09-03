@@ -10,3 +10,6 @@ th{
     height: 90vh;
     overflow: h;
 }
+.margins-top{
+    margin-top: 60px !important;
+}

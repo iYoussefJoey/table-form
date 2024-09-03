@@ -8,3 +8,9 @@
   .example-radio-button {
     margin: 5px;
   }
+  .margins-top{
+    margin-top: 60px !important;
+}
+.childcomponent{
+  padding-left: 880px ;
+}

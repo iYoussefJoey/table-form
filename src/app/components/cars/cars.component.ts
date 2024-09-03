@@ -22,6 +22,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { Spot } from '../../interfaces/spot';
+import { GlobalButtonComponent } from "../global-button/global-button.component";
+import { GobalSelectListComponent } from "../gobal-select-list/gobal-select-list.component";
 
 @Component({
   selector: 'app-cars',
@@ -35,10 +37,12 @@ import { Spot } from '../../interfaces/spot';
     MatInputModule,
     MatButtonModule,
     AsyncPipe,
-    MatRadioModule,  
+    MatRadioModule,
     CommonModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    GlobalButtonComponent,
+    GobalSelectListComponent
+],
   templateUrl: './cars.component.html',
   styleUrl: './cars.component.css',
 })
@@ -95,7 +99,19 @@ export class CarsComponent implements OnInit {
     }
   ];
   
+  constructor(private fb:FormBuilder) {
+    const breakpointObserver = inject(BreakpointObserver);
 
+    this.stepperOrientation = breakpointObserver
+      .observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
+  
+  
+    this.form = this.fb.group({
+    selectedSpots : this.fb.array([]),
+    options : FormControl
+    })
+}
   ngOnInit(): void {
         // Create 30 spot objects and add them to the spots array
     for (let i = 0; i < 30; i++) {
@@ -108,10 +124,8 @@ export class CarsComponent implements OnInit {
   toggleSpot(spot: Spot) {
     spot.selected = !spot.selected;
     const selectedSpotsArray = this.form.get('selectedSpots') as FormArray;
-
      // Remove the spot from its current position
   this.spots = this.spots.filter(s => s.id !== spot.id);
-
       // If selected, add to form array and move to beginning of spots array
     if (spot.selected) {
       selectedSpotsArray.push(this.fb.control(spot.id));
@@ -121,7 +135,6 @@ export class CarsComponent implements OnInit {
       // If deselected, remove from form array and move back to original position
       const index = selectedSpotsArray.controls.findIndex(x => x.value === spot.id);
       selectedSpotsArray.removeAt(index);
-
       // Separate selected and unselected spots
       const selectedSpots = this.spots.filter(s => s.selected);
       const unselectedSpots = this.spots.filter(s => !s.selected);
@@ -129,7 +142,6 @@ export class CarsComponent implements OnInit {
   unselectedSpots.sort((a, b) => a.id - b.id);
     // Combine selected and sorted unselected spots
   this.spots = [...selectedSpots, ...unselectedSpots];
-
   // If the toggled spot was deselected, insert it in the correct position
   if (!spot.selected) {
     const insertIndex = this.spots.findIndex(s => !s.selected && s.id > spot.id);
@@ -167,6 +179,13 @@ export class CarsComponent implements OnInit {
     this.form.get('selectedOrder')?.patchValue(order);
     //updates the part of the form when an order is selected.
   }
+  onSubmit() {
+    if (this.form.valid && (this.form.get('selectedSpots') as FormArray).length >= 2) {
+      console.log(this.form.value);
+    } else {
+      console.log('Form is invalid or less than 2 spots selected');
+    }
+  }
 
   _formBuilder = inject(FormBuilder);
 
@@ -181,26 +200,7 @@ export class CarsComponent implements OnInit {
   });
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private fb:FormBuilder) {
-    const breakpointObserver = inject(BreakpointObserver);
 
-    this.stepperOrientation = breakpointObserver
-      .observe('(min-width: 800px)')
-      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-  
-  
-    this.form = this.fb.group({
-    selectedSpots : this.fb.array([]),
-    options : FormControl
-    })
-}
-onSubmit() {
-  if (this.form.valid && (this.form.get('selectedSpots') as FormArray).length >= 2) {
-    console.log(this.form.value);
-  } else {
-    console.log('Form is invalid or less than 2 spots selected');
-  }
-}
 }
 // when unselect it gets rendering without refresh && make a form to 
 

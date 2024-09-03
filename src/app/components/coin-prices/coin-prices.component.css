@@ -8,3 +8,6 @@ mat-header-row{
     align-items: center;
     height: 90vh;
 }
+.margins-top{
+    margin-top: 60px !important;
+}

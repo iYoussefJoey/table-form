@@ -31,3 +31,6 @@ table {
     font-size: 14px;
     width: 25%;
   }
+  .margins-top{
+    margin-top: 60px !important;
+}

@@ -1,0 +1,29 @@
+<div class="center" *ngIf="isLoading">
+<mat-spinner></mat-spinner>
+</div>
+<div class="d-flex flex-wrap margins-top">
+<mat-card class="example-card d-flex flex-column justify-content-between" appearance="outlined" *ngFor="let card of productList">
+    <mat-card-header class="text-center d-block">
+      <mat-card-title>{{card.category | uppercase}}</mat-card-title>
+      <mat-card-subtitle><strong>{{card.price |currency}}</strong>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="card.image"  alt="thumbnail">
+    <mat-card-content>
+      <p>  {{card.description}}    </p>
+    </mat-card-content>
+    <div class="d-flex justify-content-between">
+        <div class=" d-flex me-auto mt-auto marginB align-items-center">
+            <div class="d-flex">
+                <mat-icon  color="primary">star</mat-icon>
+                <span>{{card.rating.rate}}</span>
+            </div>
+            <span>ID({{card.id}})</span>
+        </div>
+        <mat-card-actions class="ms-auto mt-auto">
+            <button mat-button>SHARE</button>
+            <button mat-flat-button color="primary">LIKE</button>
+        </mat-card-actions>
+    </div>
+  </mat-card>
+</div>

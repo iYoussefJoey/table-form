@@ -6,6 +6,7 @@ import { CoinPricesComponent } from './components/coin-prices/coin-prices.compon
 import { authGuard } from './auth.guard';
 import { NationPopulationComponent } from './components/nation-population/nation-population.component';
 import { CarsComponent } from './components/cars/cars.component';
+import { FakeApiComponent } from './components/fake-api/fake-api.component';
 
 export const routes: Routes = [
 
@@ -16,6 +17,7 @@ export const routes: Routes = [
     {path: 'coin', canActivate: [authGuard] , component: CoinPricesComponent},
     {path: 'nation', canActivate: [authGuard] , component: NationPopulationComponent},
     {path: 'cars', canActivate: [authGuard] , component: CarsComponent},
+    {path: 'products', canActivate: [authGuard] , component: FakeApiComponent},
     {path: 'settings', component: UserSettingsComponent},
     
 ];
