@@ -23,6 +23,16 @@
   transition: border 0.1s ease;
 }
 
+.container2 {
+  display: grid; 
+  grid-template-columns: 1fr 1fr; 
+  grid-template-rows: 1fr; 
+  gap: 0px 20px; 
+  grid-template-areas: 
+  "one two"; 
+}
+.one { grid-area: one; }
+.two { grid-area: two; }
 .selectes{
   border: #5146A9 2px solid;
   transform: scale(1.1);

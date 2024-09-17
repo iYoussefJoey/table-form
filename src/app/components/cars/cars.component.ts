@@ -22,8 +22,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatRadioModule } from '@angular/material/radio';
 import { Spot } from '../../interfaces/spot';
-import { GlobalButtonComponent } from "../global-button/global-button.component";
-import { GobalSelectListComponent } from "../gobal-select-list/gobal-select-list.component";
+import { GlobalButtonComponent } from '../global-button/global-button.component';
+import { GobalSelectListComponent } from '../gobal-select-list/gobal-select-list.component';
 
 @Component({
   selector: 'app-cars',
@@ -41,8 +41,8 @@ import { GobalSelectListComponent } from "../gobal-select-list/gobal-select-list
     CommonModule,
     ReactiveFormsModule,
     GlobalButtonComponent,
-    GobalSelectListComponent
-],
+    GobalSelectListComponent,
+  ],
   templateUrl: './cars.component.html',
   styleUrl: './cars.component.css',
 })
@@ -76,83 +76,86 @@ export class CarsComponent implements OnInit {
 
   spots: Spot[] = [];
   selectedSpots: Spot[] = [];
-  selectedValue: any 
-  form!:FormGroup
+  selectedValue: any;
+  form!: FormGroup;
   options = [
     {
       date: '23.09.2024',
       home: 'B056B, B056P, B056B, B056P, B056B, B056P',
       person: 'Piotr Gawara Company Sp. z o.o.',
-      car: 'FZ9875J'
+      car: 'FZ9875J',
     },
     {
       date: '23.09.2024',
       home: 'B056B, B056P',
       person: 'Piotr Gawara Company Sp. z o.o.',
-      car: 'FZ9875J'
+      car: 'FZ9875J',
     },
     {
       date: '23.09.2024',
       home: 'B056B, B056P',
       person: 'Piotr Gawara Company Sp. z o.o.',
-      car: 'FZ9875J'
-    }
+      car: 'FZ9875J',
+    },
   ];
-  
-  constructor(private fb:FormBuilder) {
+
+  constructor(private fb: FormBuilder) {
     const breakpointObserver = inject(BreakpointObserver);
 
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
-  
-  
+
     this.form = this.fb.group({
-    selectedSpots : this.fb.array([]),
-    options : FormControl
-    })
-}
+      selectedSpots: this.fb.array([]),
+      options: FormControl,
+    });
+  }
   ngOnInit(): void {
-        // Create 30 spot objects and add them to the spots array
+    // Create 30 spot objects and add them to the spots array
     for (let i = 0; i < 30; i++) {
-  this.spots.push({id: i + 1, name: `B051B`, selected: false });
+      this.spots.push({ id: i + 1, name: `B051B`, selected: false });
     }
     // Load persistent selections from localStorage
-      this.loadSelections();
+    this.loadSelections();
   }
-
+///////////////////////////////////////////repeat by myself
   toggleSpot(spot: Spot) {
     spot.selected = !spot.selected;
     const selectedSpotsArray = this.form.get('selectedSpots') as FormArray;
-     // Remove the spot from its current position
-  this.spots = this.spots.filter(s => s.id !== spot.id);
-      // If selected, add to form array and move to beginning of spots array
+    // Remove the spot from its current position
+    this.spots = this.spots.filter((s) => s.id !== spot.id);
+    // If selected, add to form array and move to beginning of spots array
     if (spot.selected) {
       selectedSpotsArray.push(this.fb.control(spot.id));
       // Move to beginning of array
       this.spots.unshift(spot);
     } else {
       // If deselected, remove from form array and move back to original position
-      const index = selectedSpotsArray.controls.findIndex(x => x.value === spot.id);
+      const index = selectedSpotsArray.controls.findIndex(
+        (x) => x.value === spot.id
+      );
       selectedSpotsArray.removeAt(index);
       // Separate selected and unselected spots
-      const selectedSpots = this.spots.filter(s => s.selected);
-      const unselectedSpots = this.spots.filter(s => !s.selected);
-        // Sort unselected spots by their ID
-  unselectedSpots.sort((a, b) => a.id - b.id);
-    // Combine selected and sorted unselected spots
-  this.spots = [...selectedSpots, ...unselectedSpots];
-  // If the toggled spot was deselected, insert it in the correct position
-  if (!spot.selected) {
-    const insertIndex = this.spots.findIndex(s => !s.selected && s.id > spot.id);
-    if (insertIndex === -1) {
-      this.spots.push(spot);
-    } else {
-      this.spots.splice(insertIndex, 0, spot);
+      const selectedSpots = this.spots.filter((s) => s.selected);
+      const unselectedSpots = this.spots.filter((s) => !s.selected);
+      // Sort unselected spots by their ID
+      unselectedSpots.sort((a, b) => a.id - b.id);
+      // Combine selected and sorted unselected spots
+      this.spots = [...selectedSpots, ...unselectedSpots];
+      // If the toggled spot was deselected, insert it in the correct position
+      if (!spot.selected) {
+        const insertIndex = this.spots.findIndex(
+          (s) => !s.selected && s.id > spot.id
+        );
+        if (insertIndex === -1) {
+          this.spots.push(spot);
+        } else {
+          this.spots.splice(insertIndex, 0, spot);
+        }
+      }
     }
-  }
-}
-    
+
     this.saveSelections();
   }
 
@@ -161,8 +164,10 @@ export class CarsComponent implements OnInit {
     //   'selectedSpots',
     //   JSON.stringify(this.selectedSpots.map((s) => s.id))
     // );
-    localStorage.setItem('selectedSpots', JSON.stringify(this.form.get('selectedSpots')?.value));
-
+    localStorage.setItem(
+      'selectedSpots',
+      JSON.stringify(this.form.get('selectedSpots')?.value)
+    );
   }
   loadSelections() {
     const savedSelections = JSON.parse(
@@ -180,7 +185,10 @@ export class CarsComponent implements OnInit {
     //updates the part of the form when an order is selected.
   }
   onSubmit() {
-    if (this.form.valid && (this.form.get('selectedSpots') as FormArray).length >= 2) {
+    if (
+      this.form.valid &&
+      (this.form.get('selectedSpots') as FormArray).length >= 2
+    ) {
       console.log(this.form.value);
     } else {
       console.log('Form is invalid or less than 2 spots selected');
@@ -199,16 +207,14 @@ export class CarsComponent implements OnInit {
     thirdCtrl: ['', Validators.required],
   });
   stepperOrientation: Observable<StepperOrientation>;
-
-
 }
-// when unselect it gets rendering without refresh && make a form to 
+// when unselect it gets rendering without refresh && make a form to
 
 // Expected form data
 // Conditions must have 2 minimum selected partitions and selectedOrder
 // {
 //   selectedPartitions:[1,2,3],
-//   selectedOrder : 
+//   selectedOrder :
 //   {
 //     date: '23.09.2024',
 //     home: 'B056B, B056P',

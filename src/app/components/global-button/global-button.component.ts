@@ -17,6 +17,7 @@ export class GlobalButtonComponent {
 @Input() buttonwidth!:string 
 @Input() bgcolor!:string 
 @Input() icons!:string
+@Input() disabled!:boolean
 @Input() isLoading:boolean = false
 @Input() buttonId!:string
 @Output() buttonClick:EventEmitter<string> = new EventEmitter<string>();

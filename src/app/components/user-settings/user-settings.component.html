@@ -1,50 +1,132 @@
 <div class="container mt-5 margins-top">
-<h3>{{ 'HELLO' | translate }}   {{name }}</h3>
-<mat-form-field appearance="outline">
-    <mat-label>{{ 'PLACEHOLDER' | translate}}</mat-label>
-    <input matInput placeholder="{{ 'PLACEHOLDER' |translate }}" [(ngModel)]="name">
+  <h3>{{ "HELLO" | translate }} {{ name }}</h3>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "PLACEHOLDER" | translate }}</mat-label>
+    <input
+      matInput
+      placeholder="{{ 'PLACEHOLDER' | translate }}"
+      [(ngModel)]="name"
+    />
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-    <mat-hint>{{'letUsKnow' |translate}}</mat-hint>
+    <mat-hint>{{ "letUsKnow" | translate }}</mat-hint>
   </mat-form-field>
   <div class="mt-5">
-    <label id="example-radio-group-label">{{'NAME_STYLE_LABEL'| translate }}</label>
+    <label id="example-radio-group-label">{{
+      "NAME_STYLE_LABEL" | translate
+    }}</label>
     <mat-radio-group
       aria-labelledby="example-radio-group-label"
-      class="example-radio-group" [(ngModel)]="radioOption" (change)="onRadioClk()"> 
+      class="example-radio-group"
+      [(ngModel)]="radioOption"
+      (change)="onRadioClk()"
+    >
       <!-- ngmodel is a 2 way data binding  and binds the selected radio button and onRadioClk when selected radio btn changes-->
-      <mat-radio-button class="example-radio-button" value="firstname" >{{"FIRSTNAME_LASTNAME"| translate}}</mat-radio-button>
-      <mat-radio-button class="example-radio-button" value="lastname" >{{'LASTNAME_FIRSTNAME' |translate}}</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="firstname">{{
+        "FIRSTNAME_LASTNAME" | translate
+      }}</mat-radio-button>
+      <mat-radio-button class="example-radio-button" value="lastname">{{
+        "LASTNAME_FIRSTNAME" | translate
+      }}</mat-radio-button>
     </mat-radio-group>
   </div>
-  <div class=" w-100 mt-5"> 
-    <div class="mt-2 childcomponent">
-    <app-global-button [bgcolor]="'darkblue'" [buttonwidth]="'220px'" [buttonId]="'button1'" [isLoading]="loadingStas['button1']" [icons]="'flag'" (buttonClick)="switchToPolish('button1')" [name]="'switchToPolish'"></app-global-button>
+  <div class="w-100 mt-5">
+    <div class="mt-2 childcomponent"></div>
+    <div class="d-flex mt-2">
+      <button mat-icon-button (click)="switchToPolish('button1')" [disabled]="selectedLanguage?.language === 'Polski'">
+        <img class="rounded-5" src="assets/PLFLAG.png" height="50" alt="UK Flag">  
+      </button>
+      <app-global-button 
+        [bgcolor]="'darkblue'"
+        [buttonwidth]="'220px'"
+        [buttonId]="'button1'"
+        [isLoading]="loadingStas['button1']"
+        [icons]="'flag'"
+        [disabled]="selectedLanguage.language === 'Polski'"
+        (buttonClick)="switchToPolish('button1')"
+        [name]="'switchToPolish'"
+      ></app-global-button>
+      <app-global-button
+        id="button2"
+        class="childcomponent"
+        [buttonwidth]="'220px'"
+        [bgcolor]="'darkblue'"
+        [isLoading]="loadingStas['button2']"
+        [icons]="'flag'"
+        [disabled]="selectedLanguage.language === 'English'"
+        (buttonClick)="switchToEnglish('button2')"
+        [name]="'switchToEnglish'"
+      ></app-global-button>
+      <button mat-icon-button (click)="switchToEnglish('button2')"  [disabled]="selectedLanguage?.language === 'English'">
+        <img class="rounded-5" src="assets/UK.jfif" height="50" alt="UK Flag">  
+      </button>
+    </div>
+    <div class="d-flex justify-content-center mt-2 mb-5 ">
+    <!-- A dropdown list for selecting a language -->
+    <mat-form-field>
+      <!-- Bind the selected language to the selectedLanguage variable -->
+      <!-- Call the onLanguageChange() function when the selection changes -->
+      <mat-select [(value)]="selectedLanguage" (selectionChange)="onLanguageChange()" >
+        <!-- Display the selected language and flag -->
+        <mat-select-trigger>
+          {{ selectedLanguage?.language }}
+          <img class="rounded-5" [src]="selectedLanguage?.flag" alt="" width="20">
+        </mat-select-trigger>
+        <!-- Loop through the language options and display each one -->
+        <mat-option *ngFor="let option of languageOptions" [value]="option">
+          {{ option.language }}
+          <img class="rounded-5 " [src]="option.flag" alt="" width="20">
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-  <div class="mt-2 childcomponent">
-  <app-global-button  [buttonwidth]="'220px'" [bgcolor]="'darkblue'"  [isLoading]="loadingStas['button2']" [icons]="'flag'" (buttonClick)="switchToEnglish('button2')" [name]="'switchToEnglish'"></app-global-button>
-</div>
     <div class="m-2">
-      <h3 class="text-center text-capitalize" [ngStyle]="{'color':tokenColor}">{{showToken()}}</h3>
-    <h3>{{'TOKEN_EXPIRES'|translate}}</h3>
-    <hr>
-    <h4 >{{'CURRENT_DATE'|translate}} <span class="text-success ps-2"> {{ todayDate | date:"dd.MM.yyyy 'at' hh:mm a"  }} </span> </h4>
-    <hr>
-    <h4 >{{ 'TOKEN_EXPIRY_DATE' |translate }}<span class="text-danger ps-2" > {{ tokenExpiryDate | dateFormat}}</span></h4> 
-    <!-- // create a pipe using "custom Date Pipe" <= the name customDatePipe
+      <h3 class="text-center text-capitalize" [ngStyle]="{ color: tokenColor }">
+        {{ showToken() }}
+      </h3>
+      <h3>{{ "TOKEN_EXPIRES" | translate }}</h3>
+      <hr />
+      <h4>
+        {{ "CURRENT_DATE" | translate }}
+        <span class="text-success ps-2">
+          {{ todayDate | date : "dd.MM.yyyy 'at' hh:mm a" }}
+        </span>
+      </h4>
+      <hr />
+      <!-- <p>&nbsp;</p> -->
+      <h4>
+        {{ "TOKEN_EXPIRY_DATE" | translate
+        }}<span class="text-danger ps-2">
+          {{ tokenExpiryDate | dateFormat }}</span
+        >
+      </h4>
+      <!-- // create a pipe using "custom Date Pipe" <= the name customDatePipe
  
      'dd.MM.YYYY HH:mm.ss'
      make a custom pipe too translate to polish!!
      -->
-  </div>
-  <div class="d-block ">
-    <mat-form-field class="d-block">
-    <input  matInput placeholder="{{ 'PRESS_BUTTON_BELOW' | translate }}"  type="text" readonly>
-    <mat-icon matSuffix>favorite</mat-icon>
-    </mat-form-field>
-    <div class="childcomponent " >
-      <app-global-button [bgcolor]="'darkblue'" [isLoading]="loadingStas['button3']"  [buttonwidth]="'400px'" [icons]="'favorite'" (buttonClick)="generateTokenAndNavigate('button3')" [name]="'GENERATE_TOKEN'"></app-global-button>
-      
     </div>
-</div>
-</div>
+    <div class="d-block">
+      <mat-form-field class="d-block">
+        <input
+          id="myInput"
+          matInput
+          placeholder="{{ showToken() | translate }}"
+          type="text"
+          readonly
+        />
+        <mat-icon matSuffix>favorite</mat-icon>
+      </mat-form-field>
+      <div class="childcomponent">
+        <app-global-button
+        [disabled]="false"
+          [bgcolor]="'darkblue'"
+          [isLoading]="loadingStas['button3']"
+          [buttonwidth]="'400px'"
+          [icons]="'favorite'"
+          (buttonClick)="generateTokenAndNavigate('button3')"
+          [name]="'GENERATE_TOKEN'"
+        ></app-global-button>
+      </div>
+    </div>
+  </div>
 </div>

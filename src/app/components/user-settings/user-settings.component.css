@@ -11,6 +11,15 @@
   .margins-top{
     margin-top: 60px !important;
 }
-.childcomponent{
-  padding-left: 880px ;
+#button2.childcomponent{
+  padding-left: 800px ;
 }
+.childcomponent{
+  padding-left: 895px;
+}
+
+#myInput.mdc-text-field__input{
+  text-align: center !important;
+
+}
+

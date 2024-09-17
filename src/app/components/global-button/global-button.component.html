@@ -3,11 +3,12 @@
   [style.background-color]="bgcolor"
   mat-flat-button
   color="primary"
+  disabled="{{ disabled }}"
   (click)="buttonClick.emit()"
 >
   <mat-icon>{{ icons }}</mat-icon>
   <span class="d-flex align-items-center">
     {{ name | translate }}
-    <mat-spinner color="warn" diameter="20" *ngIf="isLoading" class="ms-2"></mat-spinner>
+    <mat-spinner color="warn" diameter="20"  *ngIf="isLoading" class="ms-2"></mat-spinner>
   </span>
 </button>

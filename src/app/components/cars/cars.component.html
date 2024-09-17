@@ -1,142 +1,178 @@
 <div class="cont margins-top">
-    <div class="d-flex justify-content-between mt-3">
-        <h3 >Przedluzenie pobytu</h3>
-        <mat-icon  class="mt-2 font">close</mat-icon>
-    </div>
+  <div class="d-flex justify-content-between mt-3">
+    <h3>Przedluzenie pobytu</h3>
+    <mat-icon class="mt-2 font">close</mat-icon>
+  </div>
 
+  <div>
+    @switch (stepperOrientation | async) { @case ('horizontal') {
+    <div>Make your screen smaller to see a vertical stepper</div>
+    } @case ('vertical') {
+    <div>Make your screen larger to see a horizontal stepper</div>
+    } }
 
-    <div>
-        @switch (stepperOrientation | async) {
-            @case ('horizontal') {
-              <div>Make your screen smaller to see a vertical stepper</div>
-            }
-            @case ('vertical') {
-              <div>Make your screen larger to see a horizontal stepper</div>
-            }
-          }
-          
-          <mat-stepper
-            class="example-stepper"
-            [orientation]="(stepperOrientation | async)!">
-            <mat-step [stepControl]="firstFormGroup" label="Sprzedaż stanowisk">
-              <form [formGroup]="firstFormGroup">
-                <mat-form-field class="example-full-width">
-                  <mat-label>Nr rejestracyjny...</mat-label>
-                  <span matTextPrefix> 
-                    <mat-icon matSuffix>directions_car</mat-icon>
-                  </span>
-                  <input type="tel" matInput placeholder="555-555-1234">
-                </mat-form-field>
-                <mat-form-field class="example-full-width">
-                  <mat-label>Nr biletu czasowego...</mat-label>
-                  <span matTextPrefix> 
-                    <mat-icon matSuffix>credit_score</mat-icon>
-                  </span>
-                  <input type="tel" matInput placeholder="555-555-1234">
-                </mat-form-field>
-                <mat-form-field class="example-full-width">
-                  <mat-label>Nazwa stanowiska...</mat-label>
-                  <span matTextPrefix> 
-                    <mat-icon matSuffix>house</mat-icon>
-                  </span>
-                  <input type="tel" matInput placeholder="555-555-1234">
-                </mat-form-field>
-                <div>
-                  <button mat-button matStepperNext>Next</button>
+    <mat-stepper
+      class="example-stepper"
+      [orientation]="(stepperOrientation | async)!"
+    >
+      <mat-step [stepControl]="firstFormGroup" label="Sprzedaż stanowisk">
+        <form [formGroup]="firstFormGroup">
+          <mat-form-field class="example-full-width">
+            <mat-label>Nr rejestracyjny...</mat-label>
+            <span matTextPrefix>
+              <mat-icon matSuffix>directions_car</mat-icon>
+            </span>
+            <input type="tel" matInput placeholder="555-555-1234" />
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Nr biletu czasowego...</mat-label>
+            <span matTextPrefix>
+              <mat-icon matSuffix>credit_score</mat-icon>
+            </span>
+            <input type="tel" matInput placeholder="555-555-1234" />
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Nazwa stanowiska...</mat-label>
+            <span matTextPrefix>
+              <mat-icon matSuffix>house</mat-icon>
+            </span>
+            <input type="tel" matInput placeholder="555-555-1234" />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup" label="Podsumowanie">
+        <form [formGroup]="secondFormGroup">
+          <mat-form-field>
+            <mat-label>Nr biletu czasowego...</mat-label>
+            <input
+              matInput
+              formControlName="secondCtrl"
+              placeholder="Ex. 1 Main St, New York, NY"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="thirdFormGroup" label="Terminal: Płatność kartą">
+        <form [formGroup]="thirdFormGroup">
+          <mat-form-field>
+            <mat-label>Nazwa stanowiska...</mat-label>
+            <input
+              matInput
+              formControlName="thirdCtrl"
+              placeholder="Ex. 12345678"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>"Drukowanie"</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="w-100 d-flex">
+        <div class="w-50 flex-wrap me-4">
+          <h3 class="h4">Wybierz zamowienie</h3>
+          <mat-radio-group
+            aria-label="Select an option"
+            formControlName="options"
+            [(ngModel)]="selectedValue"
+          >
+            <div
+              class="radio-wrapper"
+              *ngFor="let item of options; let i = index"
+              [ngClass]="{ selectes: selectedValue === item }"
+            >
+              <mat-radio-button
+                class="custom-radio"
+                [value]="item"
+              ></mat-radio-button>
+              <div class="radio-content">
+                <div class="line fnt">23.09.{{ item.date }}</div>
+                <div class="line">
+                  <mat-icon>home</mat-icon>
+                  {{ item.home }}
                 </div>
-              </form>
-            </mat-step>
-            <mat-step [stepControl]="secondFormGroup" label="Podsumowanie">
-              <form [formGroup]="secondFormGroup">
-                <mat-form-field>
-                  <mat-label>Nr biletu czasowego...</mat-label>
-                  <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                         required>
-                </mat-form-field>
-                <div>
-                  <button mat-button matStepperPrevious>Back</button>
-                  <button mat-button matStepperNext>Next</button>
+                <div class="line">
+                  <mat-icon>person</mat-icon>
+                  {{ item.person }}
                 </div>
-              </form>
-            </mat-step>
-            <mat-step [stepControl]="thirdFormGroup" label="Terminal: Płatność kartą">
-              <form [formGroup]="thirdFormGroup">
-                <mat-form-field>
-                  <mat-label>Nazwa stanowiska...</mat-label>
-                  <input matInput formControlName="thirdCtrl" placeholder="Ex. 12345678" required>
-                </mat-form-field>
-                <div>
-                  <button mat-button matStepperPrevious>Back</button>
-                  <button mat-button matStepperNext>Next</button>
+                <div class="line">
+                  <mat-icon>directions_car</mat-icon>
+                  {{ item.car }}
                 </div>
-              </form>
-            </mat-step>
-            <mat-step>
-              <ng-template matStepLabel>"Drukowanie"</ng-template>
-              <p>You are now done.</p>
-              <div>
-                <button mat-button matStepperPrevious>Back</button>
-              </div>
-            </mat-step>
-          </mat-stepper>
-
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <div class="w-100 d-flex" >
-            <div class="w-50 flex-wrap me-4">
-              <h3 class="h4"> Wybierz zamowienie</h3>
-              <mat-radio-group aria-label="Select an option" formControlName="options" [(ngModel)]="selectedValue">
-                <div class="radio-wrapper" *ngFor="let item of options; let i = index "       [ngClass]="{'selectes': selectedValue === item}">
-                  <mat-radio-button  class="custom-radio" [value]="item " ></mat-radio-button>
-                  <div class="radio-content">
-                    <div class="line fnt">23.09.{{item.date}}</div>
-                    <div class="line">
-                      <mat-icon>home</mat-icon>
-                      {{item.home}}
-                    </div>
-                    <div class="line">
-                      <mat-icon>person</mat-icon>
-                      {{item.person}}
-                    </div>
-                    <div class="line">
-                      <mat-icon>directions_car</mat-icon>
-                    {{item.car}}
-                    </div>
-                  </div>
-                </div>                
-              </mat-radio-group>
-
-              <div>
-                <button mat-raised-button class="w-100" >Anuluj</button>
               </div>
             </div>
-              <div class="w-50 ms-4" formArrayName="selectedSpots">
-                <h3 class="h4">Wybierz stanowisko</h3>
-                <div class="grid-container">
-                  <div *ngFor="let spot of spots; let i = index" 
-                  class="grid-item" 
-                  [class.selected]="spot.selected"
-                  (click)="toggleSpot(spot)">
-                  <span *ngIf="spot.selected" class="checkmark"><mat-icon>check_circle</mat-icon></span>
-                  {{ spot.name }}  {{ spot.id }}
-                </div>
-              </div>
-              <div class="d-flex ">
-                <p class="ms-auto price">Kwota przedłużenia: 300,00 zł</p>
-              </div>
-            
-              <button type="submit" mat-flat-button class="w-100 nd">Przejdź dalej</button>
+          </mat-radio-group>
+
+          <div>
+            <!-- <button mat-raised-button class="w-100">Anuluj</button> -->
+          </div>
+        </div>
+        <div class="w-50 ms-4" formArrayName="selectedSpots">
+          <h3 class="h4">Wybierz stanowisko</h3>
+          <div class="grid-container">
+            <div
+              *ngFor="let spot of spots; let i = index"
+              class="grid-item"
+              [class.selected]="spot.selected"
+              (click)="toggleSpot(spot)"
+            >
+              <span *ngIf="spot.selected" class="checkmark"
+                ><mat-icon>check_circle</mat-icon></span
+              >
+              {{ spot.name }} {{ spot.id }}
             </div>
-            <!-- <app-gobal-select-list  ></app-gobal-select-list> -->
+          </div>
+          <!-- <div class="d-flex">
+            <p class="ms-auto price">Kwota przedłużenia: 300,00 zł</p>
+          </div>
+
+          <button type="submit" mat-flat-button class="w-100 nd">
+            Przejdź dalej
+          </button> -->
         </div>
-      </form>
+      </div>
+      <div class="container2">
+        <div class="one d-flex align-items-end">
+          <!-- <p>&nbsp;</p>  this can be used to add space and set auto margin top to the button or the css way -->
+          <button  mat-raised-button class="w-100 ">Anuluj</button>
         </div>
-<!-- [class.selected]="spot === selectedSpot"
+        <div class="two">
+          <div class="d-flex">
+          <p class="ms-auto price">Kwota przedłużenia: 300,00 zł</p>
+        </div>
+          <button type="submit" mat-flat-button class="w-100 nd">
+            Przejdź dalej
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- [class.selected]="spot === selectedSpot"
 [class.first-selected]="i === 0 && spot === selectedSpot"
 [class.second-selected]="i === 1 && spot === selectedSpot"
 [class.nine-selected]="i === 8 && spot === selectedSpot" -->
 
-<!-- chat GPT code same as picture was testing  -->
-<!-- <div class="seat-selection w-50" >
+  <!-- chat GPT code same as picture was testing  -->
+  <!-- <div class="seat-selection w-50" >
   <h3>Wybierz stanowisko</h3>
   <div class="grid">
     <div 
@@ -154,3 +190,4 @@
     <button mat-raised-button color="primary">Przejdź dalej</button>
   </div>
 </div> -->
+</div>
